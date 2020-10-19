@@ -1,0 +1,52 @@
+﻿ <select id="SELC_PRINT" class="selectpicker">
+    <option value="">Seçiniz</option>
+</select>
+ 
+<a onclick="printCek()">cek</a>
+<a onclick="printfunc()">yazdir</a>
+
+<script type="text/javascript">
+    function printCek() {
+        debugger;
+        $.ajax({
+            url: 'http://localhost:9999/Print/GetPrinters',
+            cache: false,
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            async: false,
+            origin: 
+            processData: false,
+            success: function (data) {
+                var JSON_LISTE = JSON.parse(data);
+                for (var i = 0; i < JSON_LISTE.length; i++) {
+                    var item = JSON_LISTE[i]; 
+                    $("#SELC_PRINT").append($("<option />").val(i).text(item));
+                }
+            },
+            error: function (err) {
+                alert("Call to web api failed.");
+            }
+        });
+    }
+    function printfunc() {
+        debugger;
+        if ($("#SELC_PRINT option:selected").val() !== null) {
+            $.ajax({
+                url: 'http://localhost:9999/Print/SetPrint?PRINTER_NAME=' + $("#SELC_PRINT option:selected").text(),
+                cache: false,
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                processData: false,
+                success: function (data) {
+                    debugger;
+                },
+                error: function (err) {
+                    alert("Call to web api failed.");
+                }
+            });
+        }
+    } 
+</script>
