@@ -26,7 +26,7 @@ namespace PrintList.Controllers
             doc.PrinterSettings.PrinterName = printer;
             doc.PrintPage += new PrintPageEventHandler(ProvideContent);
             //doc.PrintPage += new PrintPageEventHandler(ProvideContent);
-            doc.Print();
+            doc.Print(); 
         }
         public void ProvideContent(object sender, PrintPageEventArgs e)
         {
